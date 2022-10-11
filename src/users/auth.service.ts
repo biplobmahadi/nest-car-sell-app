@@ -22,8 +22,11 @@ export class AuthService {
     const hash = (await scrypt(password, salt, 32)) as Buffer;
 
     const hashedPassWithSalt = salt + '.' + hash.toString('hex');
+
     // create user with hashed pass and email
+    const user = this.usersService.create(email, hashedPassWithSalt);
 
     // return user
+    return user;
   }
 }
