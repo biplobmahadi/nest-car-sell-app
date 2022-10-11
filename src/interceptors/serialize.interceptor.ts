@@ -20,12 +20,12 @@ class SerializeInterceptor implements NestInterceptor {
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     // run before req
-    console.log('Before req', context);
+    // console.log('Before req', context);
 
     return next.handle().pipe(
       map((value) => {
         // run before res
-        console.log('before res', value);
+        // console.log('before res', value);
 
         return plainToInstance(this.dto, value, {
           excludeExtraneousValues: true,

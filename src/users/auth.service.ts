@@ -44,7 +44,6 @@ export class AuthService {
 
     if (storedHash !== hash.toString('hex'))
       throw new NotFoundException('millo na');
-    console.log(user, 'i am ');
     return user;
   }
 }
