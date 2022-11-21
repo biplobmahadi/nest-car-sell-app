@@ -53,4 +53,10 @@ describe('Auth Service', () => {
       NotFoundException,
     );
   });
+
+  it('signin where user not registerd', async () => {
+    await expect(service.signin('bb@bb.com', 'pass')).rejects.toThrow(
+      BadRequestException,
+    );
+  });
 });
