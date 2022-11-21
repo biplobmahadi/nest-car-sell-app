@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { User } from './user.entity';
@@ -35,5 +36,24 @@ describe('UsersController', () => {
 
   it('should be defined ok', () => {
     expect(controller).toBeDefined();
+  });
+
+  it('findAllUsers to get array of user', async () => {
+    const users = await controller.findAllUsers('aa@aa.com');
+    expect(users.length).toEqual(1);
+    expect(users[0].email).toEqual('aa@aa.com');
+  });
+
+  it('findUserById test when one user found', async () => {
+    const user = await controller.findUserById('1');
+    expect(user).toBeDefined();
+  });
+
+  it('findById will throw error if no user found', async () => {
+    fakeUserService.findOne = () => null;
+
+    await expect(controller.findUserById('1')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 });
