@@ -59,4 +59,10 @@ describe('Auth Service', () => {
       BadRequestException,
     );
   });
+
+  it('signin with invalid pass', async () => {
+    fakeUserService.find = () =>
+      Promise.resolve([{ id: 1, email: 'a', password: 'b' } as User]);
+    await expect(service.signin('b', 'bb')).rejects.toThrow(NotFoundException);
+  });
 });
