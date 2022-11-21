@@ -65,4 +65,18 @@ describe('Auth Service', () => {
       Promise.resolve([{ id: 1, email: 'a', password: 'b' } as User]);
     await expect(service.signin('b', 'bb')).rejects.toThrow(NotFoundException);
   });
+
+  it('valid pass', async () => {
+    fakeUserService.find = () =>
+      Promise.resolve([
+        {
+          id: 1,
+          email: 'a',
+          password:
+            'c443df1584b6a5d9.5790e7cfef409720df3734bc40116a17509499a5a79cfe39c1b54b53e927536c',
+        } as User,
+      ]);
+    const user = await service.signin('b', 'mypass');
+    expect(user).toBeDefined();
+  });
 });
