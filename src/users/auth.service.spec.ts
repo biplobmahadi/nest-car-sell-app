@@ -6,11 +6,11 @@ import { UsersService } from './users.service';
 
 describe('Auth Service', () => {
   let service: AuthService;
-  let fakeUserService: Partial<UsersService>;
+
   beforeEach(async () => {
     // create fake user service instance
     const users: User[] = [];
-    fakeUserService = {
+    const fakeUserService: Partial<UsersService> = {
       find: (email) => {
         const filterdUsers = users.filter((user) => user.email === email);
         return Promise.resolve(filterdUsers);
@@ -49,9 +49,7 @@ describe('Auth Service', () => {
   });
 
   it('sign up throw error if user already available', async () => {
-    fakeUserService.find = () => {
-      return Promise.resolve([{ id: 1, email: 'a', password: 'b' } as User]);
-    };
+    await service.signUp('asdf@asdf.com', 'asdf');
     await expect(service.signUp('asdf@asdf.com', 'asdf')).rejects.toThrow(
       NotFoundException,
     );
@@ -64,8 +62,7 @@ describe('Auth Service', () => {
   });
 
   it('signin with invalid pass', async () => {
-    fakeUserService.find = () =>
-      Promise.resolve([{ id: 1, email: 'a', password: 'b' } as User]);
+    await service.signUp('b', 'asdf');
     await expect(service.signin('b', 'bb')).rejects.toThrow(NotFoundException);
   });
 
