@@ -15,17 +15,18 @@ describe('Authentication Test', () => {
     await app.init();
   });
 
-  it('SignUp process', () => {
-    const providedEmail = 'aa2@aa.com';
-    const password = 'passme';
+  it('SignUp process', async () => {
     return request(app.getHttpServer())
       .post('/auth/signup')
-      .send({ providedEmail, password })
+      .send({
+        email: 'biplod3@dd.co',
+        password: 'haha',
+      })
       .expect(201)
       .then((res) => {
         const { id, email } = res.body;
         expect(id).toBeDefined();
-        expect(email).toEqual(providedEmail);
+        expect(email).toEqual('biplod3@dd.co');
       });
   });
 });
