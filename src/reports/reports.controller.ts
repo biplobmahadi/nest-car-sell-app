@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../guards/auth.guard';
-import { CreateUserDto } from 'src/users/dtos/create-user.dto';
 import { ReportsService } from './reports.service';
+import { CreateReportDto } from './dtos/create-report.dto';
 
 @Controller('reports')
 export class ReportsController {
@@ -9,7 +9,7 @@ export class ReportsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  createReports(@Body() body: CreateUserDto) {
+  createReports(@Body() body: CreateReportDto) {
     return this.reportsService.create(body);
   }
 }
